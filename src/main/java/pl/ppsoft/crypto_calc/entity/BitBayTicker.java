@@ -6,21 +6,21 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection
 public class BitBayTicker {
 
-    private double max;
-    private double min;
     private double average;
+    private double min;
+    private double max;
     @JsonIgnore private double last;
     @JsonIgnore private double bid;
     @JsonIgnore private double ask;
     @JsonIgnore private double vwap;
     @JsonIgnore private double volume;
 
-    public double getMax() {
-        return max;
+    public double getAverage() {
+        return average;
     }
 
-    public void setMax(double max) {
-        this.max = max;
+    public void setAverage(double average) {
+        this.average = average;
     }
 
     public double getMin() {
@@ -31,12 +31,12 @@ public class BitBayTicker {
         this.min = min;
     }
 
-    public double getAverage() {
-        return average;
+    public double getMax() {
+        return max;
     }
 
-    public void setAverage(double average) {
-        this.average = average;
+    public void setMax(double max) {
+        this.max = max;
     }
 
     public double getLast() {

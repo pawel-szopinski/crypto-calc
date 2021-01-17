@@ -1,19 +1,3 @@
-####
-# This Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode
-#
-# Before building the container image run:
-#
-# ./mvnw package -Pnative
-#
-# Then, build the image with:
-#
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/crypto-calc .
-#
-# Then run the container using:
-#
-# docker run -i --rm -p 8080:8080 quarkus/crypto-calc
-#
-###
 FROM archlinux:base
 WORKDIR /work/
 RUN chown 1001 /work \
@@ -21,6 +5,7 @@ RUN chown 1001 /work \
     && chown 1001:root /work
 COPY --chown=1001:root target/*-runner /work/application
 
+# Not supported by Heroku
 #EXPOSE 8080
 
 USER 1001

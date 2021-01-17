@@ -2,10 +2,11 @@ package pl.ppsoft.crypto_calc.service;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import pl.ppsoft.crypto_calc.client.BitBayClient;
+import pl.ppsoft.crypto_calc.entity.AppError;
 import pl.ppsoft.crypto_calc.entity.BitBayTicker;
-import pl.ppsoft.crypto_calc.entity.CalculatedFullResponse;
-import pl.ppsoft.crypto_calc.entity.Error;
-import pl.ppsoft.crypto_calc.entity.SingleCryptoData;
+import pl.ppsoft.crypto_calc.entity.SingleCrypto;
+import pl.ppsoft.crypto_calc.entity.Wallet;
+import pl.ppsoft.crypto_calc.messages.AppMessages;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,16 +19,19 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 public class CryptoCalcService {
 
-    private static final Pattern TICKER_SYMBOL_PATTERN =
-            Pattern.compile("^[a-zA-Z]{3}$");
+    private static final Pattern TICKER_SYMBOL_PATTERN = Pattern.compile("^[a-zA-Z]{3}$");
+    private static final double ROUND = 10.0;
+
+    @Inject
+    AppMessages appMessages;
 
     @Inject
     @RestClient
     BitBayClient bitBayClient;
 
-    public CalculatedFullResponse getWalletOverview(String symbolInvested, List<String> cryptoListRequest) {
+    public Wallet getWalletOverview(String symbolInvested, List<String> cryptoListRequest, boolean noRounding) {
         if (symbolInvested == null) {
-            throw new WebApplicationException("Currency invested symbol cannot be null", Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(appMessages.symbolCannotBeNull(), Response.Status.BAD_REQUEST);
         }
 
         var matcher = TICKER_SYMBOL_PATTERN.matcher(symbolInvested);
@@ -40,7 +44,7 @@ public class CryptoCalcService {
                     Response.Status.BAD_REQUEST);
         }
 
-        var cryptoListResponse = new ArrayList<SingleCryptoData>();
+        var cryptoListResponse = new ArrayList<SingleCrypto>();
         double overallBalance = 0;
         double overallNetProfit = 0;
         double overallInvested = 0;
@@ -49,7 +53,7 @@ public class CryptoCalcService {
             var singleCryptoResponse = parseSingleCryptoInput(input);
 
             var bbResponse = bitBayClient.getTickerForCurrencyPair(
-                    singleCryptoResponse.getCryptoSymbol() + symbolInvested);
+                    singleCryptoResponse.getSymbol() + symbolInvested);
             if (bbResponse.getStatus() == 200) {
                 bbResponse.bufferEntity();
 
@@ -57,12 +61,12 @@ public class CryptoCalcService {
                 try {
                     ticker = bbResponse.readEntity(BitBayTicker.class);
                 } catch (Exception e) {
-                    var error = bbResponse.readEntity(Error.class);
+                    var error = bbResponse.readEntity(AppError.class);
                     throw new WebApplicationException(error.getMessage(), Response.Status.BAD_REQUEST);
                 }
 
                 singleCryptoResponse.setBitBayTicker(ticker);
-                singleCryptoResponse.setBalance(ticker.getAverage() * singleCryptoResponse.getCryptoAmount());
+                singleCryptoResponse.setBalance(ticker.getAverage() * singleCryptoResponse.getAmountAcquired());
                 singleCryptoResponse.setNetProfit(
                         singleCryptoResponse.getBalance() - singleCryptoResponse.getAmountInvested());
             } else {
@@ -74,13 +78,26 @@ public class CryptoCalcService {
             overallBalance += singleCryptoResponse.getBalance();
             overallNetProfit += singleCryptoResponse.getNetProfit();
             overallInvested += singleCryptoResponse.getAmountInvested();
+
+            if (!noRounding) {
+                singleCryptoResponse.setBalance(Math.round(singleCryptoResponse.getBalance() * ROUND) / ROUND);
+                singleCryptoResponse.setNetProfit(Math.round(singleCryptoResponse.getNetProfit() * ROUND) / ROUND);
+                singleCryptoResponse.setAmountInvested(
+                        Math.round(singleCryptoResponse.getAmountInvested() * ROUND) / ROUND);
+            }
         }
 
-        return new CalculatedFullResponse(overallBalance, overallNetProfit, overallInvested, symbolInvested,
+        if (!noRounding) {
+            overallBalance = Math.round(overallBalance * ROUND) / ROUND;
+            overallNetProfit = Math.round(overallNetProfit * ROUND) / ROUND;
+            overallInvested = Math.round(overallInvested * ROUND) / ROUND;
+        }
+
+        return new Wallet(overallBalance, overallNetProfit, overallInvested, symbolInvested,
                 cryptoListResponse);
     }
 
-    private SingleCryptoData parseSingleCryptoInput(String input) {
+    private SingleCrypto parseSingleCryptoInput(String input) {
         String[] singleCryptoRequest;
         singleCryptoRequest = input.split(",");
 
@@ -112,10 +129,10 @@ public class CryptoCalcService {
                     Response.Status.BAD_REQUEST);
         }
 
-        var singleCryptoResponse = new SingleCryptoData();
-        singleCryptoResponse.setCryptoSymbol(cryptoSymbol);
+        var singleCryptoResponse = new SingleCrypto();
+        singleCryptoResponse.setSymbol(cryptoSymbol);
         singleCryptoResponse.setAmountInvested(parsedAmountInvested);
-        singleCryptoResponse.setCryptoAmount(parsedCryptoAmount);
+        singleCryptoResponse.setAmountAcquired(parsedCryptoAmount);
 
         return singleCryptoResponse;
     }

@@ -3,39 +3,39 @@ package pl.ppsoft.crypto_calc.entity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
-public class SingleCryptoData {
+public class SingleCrypto {
 
-    private String cryptoSymbol;
+    private String symbol;
     private double balance;
     private double netProfit;
     private double amountInvested;
-    private double cryptoAmount;
+    private double amountAcquired;
     private BitBayTicker bitBayTicker;
 
-    public SingleCryptoData() {
+    public SingleCrypto() {
     }
 
-    public SingleCryptoData(String cryptoSymbol, double balance, double netProfit, double amountInvested,
-                            double cryptoAmount,
-                            BitBayTicker bitBayTicker) {
-        this.cryptoSymbol = cryptoSymbol;
+    public SingleCrypto(String symbol, double balance, double netProfit, double amountInvested,
+                        double amountAcquired,
+                        BitBayTicker bitBayTicker) {
+        this.symbol = symbol;
         this.balance = balance;
         this.netProfit = netProfit;
         this.amountInvested = amountInvested;
-        this.cryptoAmount = cryptoAmount;
+        this.amountAcquired = amountAcquired;
         this.bitBayTicker = bitBayTicker;
     }
 
-    public String getCryptoSymbol() {
-        return cryptoSymbol;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setCryptoSymbol(String cryptoSymbol) {
-        this.cryptoSymbol = cryptoSymbol;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public double getBalance() {
-        return Math.round(balance * 100.0) / 100.0;
+        return balance;
     }
 
     public void setBalance(double balance) {
@@ -43,7 +43,7 @@ public class SingleCryptoData {
     }
 
     public double getNetProfit() {
-        return Math.round(netProfit * 100.0) / 100.0;
+        return netProfit;
     }
 
     public void setNetProfit(double netProfit) {
@@ -51,19 +51,19 @@ public class SingleCryptoData {
     }
 
     public double getAmountInvested() {
-        return Math.round(amountInvested * 100.0) / 100.0;
+        return amountInvested;
     }
 
     public void setAmountInvested(double amountInvested) {
         this.amountInvested = amountInvested;
     }
 
-    public double getCryptoAmount() {
-        return cryptoAmount;
+    public double getAmountAcquired() {
+        return amountAcquired;
     }
 
-    public void setCryptoAmount(double cryptoAmount) {
-        this.cryptoAmount = cryptoAmount;
+    public void setAmountAcquired(double amountAcquired) {
+        this.amountAcquired = amountAcquired;
     }
 
     public BitBayTicker getBitBayTicker() {

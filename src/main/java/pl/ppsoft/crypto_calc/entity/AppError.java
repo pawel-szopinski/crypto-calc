@@ -3,15 +3,15 @@ package pl.ppsoft.crypto_calc.entity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
-public class Error {
+public class AppError {
 
     private int code;
     private String message;
 
-    public Error() {
+    public AppError() {
     }
 
-    public Error(int code, String message) {
+    public AppError(int code, String message) {
         this.code = code;
         this.message = message;
     }

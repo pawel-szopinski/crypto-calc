@@ -1,0 +1,31 @@
+{@pl.ppsoft.crypto_calc.entity.Wallet wallet}
+{@java.lang.String name}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Calc</title>
+</head>
+<body>
+{#if name != null}
+<h1>Hello {name}!</h1>
+{/if}
+
+<h2>Here's your crypto wallet data:</h2>
+
+<div>Overall balance: <b>{wallet.overallBalance} {wallet.symbolInvested}</b></div>
+<div>Overall net profit: <b>{wallet.overallNetProfit} {wallet.symbolInvested}</b></div>
+<div>Overall amount invested: {wallet.overallAmountInvested} {wallet.symbolInvested}</div>
+
+{#for crypto in wallet.singleCryptoList}
+<p>{crypto.symbol}</p>
+<div>Balance: {crypto.balance} {wallet.symbolInvested}</div>
+<div>Net profit: {crypto.netProfit} {wallet.symbolInvested}</div>
+<div>Amount invested: {crypto.amountInvested} {wallet.symbolInvested}</div>
+<div>Amount acquired: {crypto.amountAcquired} {crypto.symbol}</div>
+<div>Current price: {crypto.bitBayTicker.average} {wallet.symbolInvested}</div>
+<div>Min price: {crypto.bitBayTicker.min} {wallet.symbolInvested}</div>
+<div>Max price: {crypto.bitBayTicker.max} {wallet.symbolInvested}</div>
+{/for}
+</body>
+</html>

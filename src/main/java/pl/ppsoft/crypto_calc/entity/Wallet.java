@@ -5,29 +5,29 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.util.List;
 
 @RegisterForReflection
-public class CalculatedFullResponse {
+public class Wallet {
 
     private double overallBalance;
     private double overallNetProfit;
     private double overallAmountInvested;
     private String symbolInvested;
-    private List<SingleCryptoData> singleCryptoDataList;
+    private List<SingleCrypto> singleCryptoList;
 
-    public CalculatedFullResponse() {
+    public Wallet() {
     }
 
-    public CalculatedFullResponse(double overallBalance, double overallNetProfit, double overallAmountInvested,
-                                  String symbolInvested,
-                                  List<SingleCryptoData> singleCryptoDataList) {
+    public Wallet(double overallBalance, double overallNetProfit, double overallAmountInvested,
+                  String symbolInvested,
+                  List<SingleCrypto> singleCryptoList) {
         this.overallBalance = overallBalance;
         this.overallNetProfit = overallNetProfit;
         this.overallAmountInvested = overallAmountInvested;
         this.symbolInvested = symbolInvested;
-        this.singleCryptoDataList = singleCryptoDataList;
+        this.singleCryptoList = singleCryptoList;
     }
 
     public double getOverallBalance() {
-        return Math.round(overallBalance * 100.0) / 100.0;
+        return overallBalance;
     }
 
     public void setOverallBalance(double overallBalance) {
@@ -35,7 +35,7 @@ public class CalculatedFullResponse {
     }
 
     public double getOverallNetProfit() {
-        return Math.round(overallNetProfit * 100.0) / 100.0;
+        return overallNetProfit;
     }
 
     public void setOverallNetProfit(double overallNetProfit) {
@@ -43,7 +43,7 @@ public class CalculatedFullResponse {
     }
 
     public double getOverallAmountInvested() {
-        return Math.round(overallAmountInvested * 100.0) / 100.0;
+        return overallAmountInvested;
     }
 
     public void setOverallAmountInvested(double overallAmountInvested) {
@@ -58,11 +58,11 @@ public class CalculatedFullResponse {
         this.symbolInvested = symbolInvested;
     }
 
-    public List<SingleCryptoData> getSingleCryptoDataList() {
-        return singleCryptoDataList;
+    public List<SingleCrypto> getSingleCryptoList() {
+        return singleCryptoList;
     }
 
-    public void setSingleCryptoDataList(List<SingleCryptoData> singleCryptoDataList) {
-        this.singleCryptoDataList = singleCryptoDataList;
+    public void setSingleCryptoList(List<SingleCrypto> singleCryptoList) {
+        this.singleCryptoList = singleCryptoList;
     }
 }
