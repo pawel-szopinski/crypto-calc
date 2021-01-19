@@ -7,6 +7,58 @@ import io.quarkus.qute.i18n.Message;
 public interface PolishAppMessages extends AppMessages {
 
     @Override
+    @Message("Portfel Kryptowalut")
+    String title();
+
+    @Override
+    @Message("Cześć")
+    String hello();
+
+    @Override
+    @Message("Podsumowanie Portfela")
+    String walletSummary();
+
+    @Override
+    @Message("Podział Na Waluty")
+    String splitByCurrency();
+
+    @Override
+    @Message("Dane Giełdowe")
+    String exchangeData();
+
+    @Override
+    @Message("Symbol")
+    String symbol();
+
+    @Override
+    @Message("Stan Konta")
+    String balance();
+
+    @Override
+    @Message("Zysk / Strata")
+    String netProfit();
+
+    @Override
+    @Message("Inwestycja")
+    String invested();
+
+    @Override
+    @Message("Nabyto")
+    String acquired();
+
+    @Override
+    @Message("Obecna Cena")
+    String currentPrice();
+
+    @Override
+    @Message("Min Cena")
+    String minPrice();
+
+    @Override
+    @Message("Max Cena")
+    String maxPrice();
+
+    @Override
     @Message("Symbol zainwestowanej waluty nie może być pusty!")
     String symbolCannotBeNull();
 
@@ -37,4 +89,8 @@ public interface PolishAppMessages extends AppMessages {
     @Override
     @Message("Nie udało się sparsować ilości posiadanej kryptowaluty do formatu numerycznego")
     String cannotParseCryptoToNumber();
+
+    @Override
+    @Message("Coś poszło nie tak...")
+    String oops();
 }

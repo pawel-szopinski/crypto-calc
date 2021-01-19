@@ -1,0 +1,40 @@
+body {
+    font-family: sans-serif, -apple-system, system-ui;
+    color: #2E3440;
+}
+
+h1 {
+    padding: 0 5px;
+}
+
+td,
+th {
+    border: 1px solid #D8DEE9;
+    padding: 10px;
+    width: 160px;
+}
+
+td {
+    text-align: right;
+}
+
+th[scope="col"] {
+    background-color: #3B4252;
+    color: #ECEFF4;
+}
+
+th[scope="row"] {
+    background-color: #E5E9F0;
+}
+
+caption {
+    padding: 10px 5px;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid #D8DEE9;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+}

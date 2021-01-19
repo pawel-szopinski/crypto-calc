@@ -3,12 +3,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Crypto Calc</title>
+    <link rel="icon" href="assets/img/icon.png">
+    <link rel="apple-touch-icon" href="assets/img/btc180.png" sizes="180x180">
+    <link rel="apple-touch-icon" href="assets/img/btc120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="assets/img/btc114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="assets/img/btc57.png">
+    <link rel="stylesheet" href="assets/css/error-style.css">
+    <title>{msg:title}</title>
 </head>
 <body>
-<h2>Something went wrong...</h2>
-<div>
-    <p>{error.code}: {error.message}</p>
-</div>
+<h2>{msg:oops}</h2>
+<div>{error.code}</div>
+<div>{error.message}</div>
 </body>
 </html>
