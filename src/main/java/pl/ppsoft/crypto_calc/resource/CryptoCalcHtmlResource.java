@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/wallet")
+@Path("/")
 @Produces(MediaType.TEXT_HTML)
 public class CryptoCalcHtmlResource {
 
@@ -24,14 +24,16 @@ public class CryptoCalcHtmlResource {
     Template error;
 
     @GET
-    public Response getTicker(@QueryParam("symbol-invested") String symbolInvested,
+    @Path("wallet")
+    public Response getTicker(@QueryParam("locale") String locale,
+                              @QueryParam("symbol-invested") String symbolInvested,
                               @QueryParam("crypto") List<String> crypto,
                               @QueryParam("no-rounding") boolean noRounding,
                               @QueryParam("name") String name) {
         try {
             return Response
                     .ok(wallet.data(
-                            "wallet", cryptoCalcService.getWalletOverview(symbolInvested, crypto, noRounding),
+                            "wallet", cryptoCalcService.getWalletOverview(symbolInvested, crypto, noRounding, locale),
                             "name", name))
                     .build();
         } catch (WebApplicationException e) {

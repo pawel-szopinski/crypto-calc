@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/api/wallet")
+@Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
 public class CryptoCalcApiResource {
 
@@ -17,11 +17,13 @@ public class CryptoCalcApiResource {
     CryptoCalcService cryptoCalcService;
 
     @GET
-    public Response getTicker(@QueryParam("symbol-invested") String symbolInvested,
+    @Path("wallet")
+    public Response getTicker(@QueryParam("locale") String locale,
+                              @QueryParam("symbol-invested") String symbolInvested,
                               @QueryParam("crypto") List<String> crypto,
                               @QueryParam("no-rounding") boolean noRounding) {
         try {
-            return Response.ok(cryptoCalcService.getWalletOverview(symbolInvested, crypto, noRounding)).build();
+            return Response.ok(cryptoCalcService.getWalletOverview(symbolInvested, crypto, noRounding, locale)).build();
         } catch (WebApplicationException e) {
             return Response.status(e.getResponse().getStatus())
                     .entity(new AppError(e.getResponse().getStatus(), e.getMessage()))
