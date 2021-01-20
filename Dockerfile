@@ -1,4 +1,4 @@
-FROM archlinux:base
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \
