@@ -18,6 +18,16 @@ td {
     text-align: right;
 }
 
+td[number-data]:after {
+    content: attr(number-data);
+    font-weight: bold;
+    color: #A3BE8C;
+}
+
+td[number-data^="-"]:after {
+    color: #BF616A;
+}
+
 th[scope="col"] {
     background-color: #3B4252;
     color: #ECEFF4;

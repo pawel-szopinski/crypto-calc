@@ -1,5 +1,6 @@
 {@pl.ppsoft.crypto_calc.entity.Wallet wallet}
 {@java.lang.String name}
+{@java.lang.Locale locale}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,9 +31,9 @@
     <tbody>
     <tr>
         <th scope="row">{wallet.symbolInvested}</th>
-        <td><strong>{wallet.overallBalance}</strong></td>
-        <td><strong>{wallet.overallNetProfit}</strong></td>
-        <td>{wallet.overallAmountInvested}</td>
+        <td><strong>{number-format:getLocaleFormattedNumber(wallet.overallBalance, locale)}</strong></td>
+        <td number-data="{number-format:getLocaleFormattedNumber(wallet.overallNetProfit, locale)}"></td>
+        <td>{number-format:getLocaleFormattedNumber(wallet.overallAmountInvested, locale)}</td>
     </tr>
     </tbody>
 </table>
@@ -52,10 +53,10 @@
     {#for crypto in wallet.singleCryptoList}
     <tr>
         <th scope="row">{crypto.symbol}</th>
-        <td><strong>{crypto.balance}</strong></td>
-        <td><strong>{crypto.netProfit}</strong></td>
-        <td>{crypto.amountInvested}</td>
-        <td>{crypto.amountAcquired}</td>
+        <td><strong>{number-format:getLocaleFormattedNumber(crypto.balance, locale)}</strong></td>
+        <td number-data="{number-format:getLocaleFormattedNumber(crypto.netProfit, locale)}"></td>
+        <td>{number-format:getLocaleFormattedNumber(crypto.amountInvested, locale)}</td>
+        <td>{number-format:getLocaleFormattedNumber(crypto.amountAcquired, locale)}</td>
     </tr>
     {/for}
     </tbody>
@@ -75,9 +76,9 @@
     {#for crypto in wallet.singleCryptoList}
     <tr>
         <th scope="row">{crypto.symbol}</th>
-        <td>{crypto.bitBayTicker.average}</td>
-        <td>{crypto.bitBayTicker.min}</td>
-        <td>{crypto.bitBayTicker.max}</td>
+        <td>{number-format:getLocaleFormattedNumber(crypto.bitBayTicker.average, locale)}</td>
+        <td>{number-format:getLocaleFormattedNumber(crypto.bitBayTicker.min, locale)}</td>
+        <td>{number-format:getLocaleFormattedNumber(crypto.bitBayTicker.max, locale)}</td>
     </tr>
     {/for}
     </tbody>

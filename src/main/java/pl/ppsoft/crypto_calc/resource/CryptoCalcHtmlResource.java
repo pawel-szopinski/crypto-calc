@@ -32,13 +32,14 @@ public class CryptoCalcHtmlResource {
                               @QueryParam("crypto") List<String> crypto,
                               @QueryParam("no-rounding") boolean noRounding,
                               @QueryParam("name") String name) {
-        Locale lang = locale == null ? Locale.ROOT : Locale.forLanguageTag(locale);
+        Locale lang = locale == null ? Locale.US : Locale.forLanguageTag(locale);
 
         try {
             return Response
                     .ok(wallet.data(
                             "wallet", cryptoCalcService.getWalletOverview(symbolInvested, crypto, noRounding, locale),
-                            "name", name).setAttribute(MessageBundles.ATTRIBUTE_LOCALE, lang))
+                            "name", name,
+                            "locale", lang).setAttribute(MessageBundles.ATTRIBUTE_LOCALE, lang))
                     .build();
         } catch (WebApplicationException e) {
             return Response.status(418) //for some reason when 400 is used, HTML is displayed as plain text
